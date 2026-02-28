@@ -5,6 +5,7 @@ const previewImages = document.querySelectorAll('.diploma-image img');
 
 const originalImages = [];
 previewImages.forEach(img => {
+    // предполагаем, что имена миниатюр содержат "-thumb"
     originalImages.push(img.src.replace('-thumb', ''));
 });
 
@@ -46,7 +47,7 @@ window.onclick = (event) => {
     }
 };
 
-// Интерактивный выбор времени для Эзиклена (исправлен)
+// Интерактивный выбор времени для Эзиклена
 const scheduleData = {
     "7:00":  { steps: ["15:00–16:00", "16:00–17:00", "03:00–04:00", "04:00–05:00"] },
     "8:00":  { steps: ["16:00–17:00", "17:00–18:00", "04:00–05:00", "05:00–06:00"] },
