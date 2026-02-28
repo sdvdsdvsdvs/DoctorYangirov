@@ -7,17 +7,12 @@
     <meta name="description" content="Янгиров Искандер Вазирович – врач-эндоскопист, к.м.н. в Москве. Стаж 22 года, высшая категория. Гастроскопия, колоноскопия, удаление новообразований. Запись по телефону.">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Фавикон -->
-    
-
-<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
-
-
-
+    <!-- Фавикон (сгенерирован realfavicongenerator.net) -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <!-- Основные стили -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -152,7 +147,7 @@
         </div>
     </section>
 
-    <!-- Модальное окно для дипломов (без изменений) -->
+    <!-- Модальное окно для дипломов -->
     <div id="diplomaModal" class="modal" onclick="closeModal()">
         <span class="modal-close" onclick="closeModal(event)">&times;</span>
         <img class="modal-content" id="modalImage">
@@ -160,12 +155,70 @@
         <button class="modal-next" onclick="nextImage(event)">&#10095;</button>
     </div>
 
-    <!-- Услуги (без изменений) -->
+    <!-- Услуги -->
     <section id="services">
         <div class="container">
             <h2 class="section-title">Направления и&nbsp;услуги</h2>
             <div class="services-grid">
-                <!-- ... карточки услуг (без изменений) ... -->
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3>Гастроскопия (ЭГДС)</h3>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Осмотр пищевода, желудка, двенадцатиперстной кишки</li>
+                        <li><i class="fas fa-circle"></i> Биопсия и&nbsp;тест на&nbsp;Helicobacter Pylori</li>
+                        <li><i class="fas fa-circle"></i> Удаление полипов</li>
+                        <li><i class="fas fa-circle"></i> Фотофиксация</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-vial"></i></div>
+                    <h3>Колоноскопия</h3>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Осмотр толстой и&nbsp;подвздошной кишки</li>
+                        <li><i class="fas fa-circle"></i> Биопсия и&nbsp;полипэктомия (удаление&nbsp;новообразований)</li>
+                        <li><i class="fas fa-circle"></i> Фотофиксация</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-cut"></i></div>
+                    <h3>Удаление новообразований</h3>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Полипэктомия</li>
+                        <li><i class="fas fa-circle"></i> Метод фрагментарной петлевой резекции слизистой</li>
+                        <li><i class="fas fa-circle"></i> Мукозэктомия методом диссекции в&nbsp;подслизистом слое</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-lungs"></i></div>
+                    <h3>Бронхоскопия и&nbsp;эндоскопическая оценка функции глотания</h3>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Осмотр слизистой трахеобронхиального дерева</li>
+                        <li><i class="fas fa-circle"></i> Эндоскопическая санация трахеобронхиального дерева</li>
+                        <li><i class="fas fa-circle"></i> Забор материала</li>
+                        <li><i class="fas fa-circle"></i> Фотофиксация</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-camera"></i></div>
+                    <h3>Оперативная эндоскопия</h3>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Эндоскопическая гастростомия и&nbsp;трахеостомия</li>
+                        <li><i class="fas fa-circle"></i> Бужирование и&nbsp;баллонная дилятация рубцовых стриктур, анастомозов ЖКТ</li>
+                        <li><i class="fas fa-circle"></i> Стентирование опухолевых стриктур бронхов и&nbsp;желудочно-кишечного тракта</li>
+                        <li><i class="fas fa-circle"></i> Остановка желудочно-кишечного кровотечения варикозной этиологии методом лигирования и&nbsp;неварикозной этиологии, в&nbsp;т.ч. клипирование</li>
+                        <li><i class="fas fa-circle"></i> Установка и&nbsp;удаление внутрижелудочного баллона</li>
+                        <li><i class="fas fa-circle"></i> Эндоскопическая вакуумная терапия при&nbsp;несостоятельности анастомозов</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-syringe"></i></div>
+                    <h3>Эндоскопические ретроградные вмешательства на&nbsp;желчных протоках</h3>
+                    <ul>
+                        <li><i class="fas fa-circle"></i> Ретроградная панкреатохолангиография, ЭПСТ</li>
+                        <li><i class="fas fa-circle"></i> Холедохолитоэкстракция (удаление&nbsp;камней), назобилиарное дренирование</li>
+                        <li><i class="fas fa-circle"></i> Ретроградное стентирование желчных протоков, в&nbsp;т.ч. билатеральное стентирование нитиноловыми стентами</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -175,9 +228,61 @@
         <div class="container">
             <h2 class="section-title">Как подготовиться к&nbsp;гастро и&nbsp;колоноскопии</h2>
             <div class="article-content">
-                <!-- ... текст подготовки (без изменений) ... -->
+                <p>От&nbsp;качества подготовки кишечника зависит успех проводимой процедуры, то&nbsp;есть выявление предопухолевой патологии и&nbsp;опухолей на&nbsp;ранней стадии, точность постановки диагноза, а&nbsp;в&nbsp;случае необходимости назначение своевременного лечения! Поэтому важно тщательно следовать инструкции по&nbsp;подготовке.</p>
+                <ul class="custom-bullet-list">
+                    <li>Сообщите врачу о&nbsp;сопутствующих заболеваниях, принимаемых препаратах (особенно влияющих на&nbsp;свёртываемость крови, сахароснижающих, гормональных), а&nbsp;также об&nbsp;аллергии (в&nbsp;том числе на&nbsp;аскорбиновую кислоту).</li>
+                    <li>Если планируется анестезия («во&nbsp;сне»): необходимо предоставить общий анализ крови и&nbsp;ЭКГ давностью не&nbsp;более 14&nbsp;дней. После процедуры нельзя управлять автомобилем и&nbsp;выполнять действия, требующие концентрации внимания.</li>
+                    <li>Жизненно важные препараты (от&nbsp;давления, сердечного ритма и&nbsp;др.) нужно принять за&nbsp;1&nbsp;час до&nbsp;начала приёма слабительного.</li>
+                </ul>
 
-                <!-- Интерактивный блок (исправлен скриптом) -->
+                <h4>Рекомендации по&nbsp;питанию за&nbsp;2–3 дня до&nbsp;процедуры</h4>
+                <p>Необходимо соблюдать диету с&nbsp;низким содержанием клетчатки за&nbsp;2–3 дня до&nbsp;проведения исследования. Исключите продукты, содержащие мелкие косточки, семена, зёрна, отруби! При хронических запорах рекомендации по&nbsp;питанию необходимо соблюдать в&nbsp;течение 5&nbsp;дней, за&nbsp;3–5 дней до&nbsp;процедуры начать или продолжить приём слабительных препаратов по&nbsp;рекомендации врача.</p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
+                    <div style="flex: 1 1 250px; background: var(--bg-light); padding: 15px; border-radius: 12px;">
+                        <strong style="color: var(--text-dark);">✅ РАЗРЕШЕНО</strong>
+                        <ul style="margin-top: 10px; list-style: none; padding-left: 0;">
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Мясо, птица и&nbsp;рыба нежирных сортов (в&nbsp;отварном, паровом или тушёном виде)</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Сыр, сметана, сливочное масло, йогурт без добавок и&nbsp;наполнителей, кисломолочные продукты</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Яйца в&nbsp;отварном виде</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Хорошо проваренный белый рис (кроме плова)</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Отварной картофель (без кожицы)</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Макароны</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Белый хлеб, печенье без цельного зерна, сушеных фруктов, ягод и&nbsp;орехов</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i>Сахар, мёд (не&nbsp;в&nbsp;сотах), желе, сироп</li>
+                            <li><i class="fas fa-check" style="color: #22c55e; margin-right: 8px;"></i><strong>Жидкости:</strong> вода, бульоны (прозрачные), сок без мякоти, чай/кофе без молока, неокрашенные напитки</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1 1 250px; background: #fef2f2; padding: 15px; border-radius: 12px;">
+                        <strong style="color: var(--text-dark);">❌ ЗАПРЕЩЕНО</strong>
+                        <ul style="margin-top: 10px; list-style: none; padding-left: 0;">
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Жирные сорта мяса, рыбы, утка, гусь</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Жесткое мясо с&nbsp;хрящами, консервы</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Сосиски, колбасы, копчености</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Все бобовые (горох, чечевица, фасоль)</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Гречневая крупа, коричневый и&nbsp;дикий рис</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Овощи, зелень, грибы, морская капуста</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Сухофрукты, орехи, семечки, кунжут, мак, зёрна, отруби</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Свежие и&nbsp;сушёные фрукты, ягоды (особенно с&nbsp;мелкими косточками)</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Зерновой хлеб, сдоба</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i>Чипсы, гамбургеры</li>
+                            <li><i class="fas fa-times" style="color: #ef4444; margin-right: 8px;"></i><strong>Напитки:</strong> алкоголь, газированные напитки, молоко, молочные супы, крем-супы, окрошка, консервы, соленья</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Рацион питания накануне и&nbsp;в&nbsp;день исследования</h4>
+                <ul class="custom-bullet-list">
+                    <li>Завтрак из&nbsp;разрешённых продуктов</li>
+                    <li>Обед до&nbsp;14:00 из&nbsp;разрешённых продуктов</li>
+                    <li>В&nbsp;течение дня необходимо принять до&nbsp;2,5 литров прозрачной жидкости: бульоны, питьевая вода, прозрачные соки, чай и&nbsp;кофе без молока, морс, прозрачный компот без ягод (если этот объём жидкости не&nbsp;противопоказан при имеющейся у&nbsp;Вас сопутствующей патологии)</li>
+                    <li>Не&nbsp;ужинать!</li>
+                </ul>
+
+                <h4>Схема приёма препарата Эзиклен</h4>
+                <p>Раствор готовится строго по&nbsp;инструкции: содержимое флакона развести водой до&nbsp;0,5 л. Пить медленно, в&nbsp;течение 30–60 минут. Запивать дополнительным литром разрешённой жидкости (вода, прозрачный чай/бульон).</p>
+
+                <!-- Интерактивный блок -->
                 <div class="interactive-prep">
                     <label for="procedure-time" class="interactive-label">
                         <i class="fas fa-clock"></i> Укажите время вашей колоноскопии, чтобы узнать когда нужно выпить Эзиклен
@@ -204,12 +309,32 @@
                     </div>
                 </div>
 
-                <!-- ... остальной текст подготовки ... -->
+                <h4>Дополнительные рекомендации по&nbsp;подготовке раствором Эзиклен</h4>
+                <ul class="prep-list-icons">
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> <strong>НЕЛЬЗЯ</strong> уменьшать объем воды для приготовления раствора и&nbsp;дополнительной разрешенной жидкости.</li>
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> <strong>НЕОБХОДИМО</strong> соблюдать последовательность: сначала раствор, потом жидкость.</li>
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> <strong>НЕЛЬЗЯ</strong> чередовать выпивание раствора с&nbsp;разрешенной прозрачной жидкостью.</li>
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> При специфическом вкусе можно пить охлаждённым, через коктейльную трубочку.</li>
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> <strong>НЕОБХОДИМО</strong> раствор выпить МЕДЛЕННО, строго в&nbsp;течение 30–60 минут с&nbsp;момента его приготовления.</li>
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> Использовать раствор сразу после вскрытия/разведения.</li>
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> Во&nbsp;время приёма рекомендуется двигательная активность: ходить, наклоны, приседания.</li>
+                    <li><i class="fas fa-circle" style="color: var(--primary); font-size: 0.6rem;"></i> Рассчитайте время для поездки в&nbsp;клинику.</li>
+                </ul>
+                <p><small>Источники информации: инструкция к&nbsp;препарату Эзиклен®, клинические рекомендации Российского эндоскопического общества, ESGE Guideline 2019.</small></p>
             </div>
 
-            <!-- Совет доктора (без изменений) -->
+            <!-- Совет доктора -->
             <div class="doctor-advice-with-photo">
-                <!-- ... -->
+                <div class="doctor-photo-circle">
+                    <img src="Photos/YangirovIskander.jpg" alt="Янгиров И.В.">
+                </div>
+                <div class="advice-content">
+                    <h4 class="advice-title">Совет доктора Янгирова</h4>
+                    <div class="advice-quote">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="advice-text">Я всегда подробно объясняю пациенту каждый этап. Не&nbsp;стесняйтесь задавать вопросы — чем лучше вы подготовлены, тем точнее будет результат и&nbsp;комфортнее процедура</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -219,7 +344,57 @@
         <div class="container">
             <h2 class="section-title center">Отзывы пациентов</h2>
             <div class="reviews-slider">
-                <!-- ... карточки отзывов (без изменений) ... -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <h4>Игорь Волков</h4>
+                            <div class="date">апрель 2024</div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-text">«Всё прошло отлично, сначала собрал информацию, затем рассказал, что и&nbsp;как будет производиться, после&nbsp;окончания подробно всё объяснил. Обязательно буду рекомендовать.»</div>
+                    <div class="review-source"><i class="fas fa-hospital"></i> Юсуповская больница [1]</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <h4>Елена</h4>
+                            <div class="date">январь 2023</div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-text">«Доктор провел колоноскопию на&nbsp;высоком профессиональном уровне. Был дружелюбен, тщательно объяснил процесс. Уделили достаточно времени, чтобы&nbsp;я не нервничала.»</div>
+                    <div class="review-source"><i class="fas fa-star"></i> vrach-russia.ru [2]</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <h4>Внучка пациентки</h4>
+                            <div class="date">август 2022</div>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="review-text">«Моя бабушка посетила врача. Он был очень профессионален и&nbsp;деликатен с&nbsp;пожилой пациенткой. Процедура прошла безболезненно, бабушка очень довольна.»</div>
+                    <div class="review-source"><i class="fas fa-star"></i> vrach-russia.ru [2]</div>
+                </div>
             </div>
             <div class="reviews-footer">
                 <a href="https://prodoctorov.ru/moskva/vrach/245678-yangirov/" target="_blank" class="btn-outline" style="padding: 10px 25px;"><i class="fas fa-external-link-alt"></i> Читать ещё отзывы на prodoctorov.ru</a>
@@ -243,16 +418,12 @@
                             <a href="mailto:yangirov@list.ru">yangirov@list.ru</a>
                         </div>
                         <div class="social-icons">
-                            <!-- Telegram по номеру -->
                             <a href="https://t.me/+79174591084" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
-                            <!-- Max по ссылке -->
                             <a href="https://max.ru/u/f9LHodD0cOLFTNGisAWWY33jyUtYkchzM4VGB6miAdauMABHcjIVA6HWqm4" target="_blank" title="Max"><i class="fas fa-comment"></i></a>
-                            <!-- Viber по номеру (если нужно) -->
                             <a href="viber://chat?number=%2B79174591084" target="_blank" title="Viber"><i class="fab fa-viber"></i></a>
                         </div>
                     </div>
                 </div>
-                <!-- Форма с отправкой на почту через mailto -->
                 <form class="contact-form" onsubmit="return sendByMail(this)">
                     <input type="text" name="name" placeholder="Ваше имя" required>
                     <input type="email" name="email" placeholder="Ваш Email" required>

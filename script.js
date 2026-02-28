@@ -1,4 +1,4 @@
-// Модальное окно для дипломов (без изменений)
+// Модальное окно для дипломов
 const modal = document.getElementById('diplomaModal');
 const modalImg = document.getElementById('modalImage');
 const previewImages = document.querySelectorAll('.diploma-image img');
@@ -105,7 +105,7 @@ timeSelect.addEventListener('change', function() {
     outputDiv.style.display = 'block';
 });
 
-// Бургер-меню (без изменений)
+// Бургер-меню
 const burger = document.querySelector('.burger-menu');
 const fullscreenMenu = document.getElementById('fullscreenMenu');
 const burgerIcon = document.querySelector('.burger-icon');
