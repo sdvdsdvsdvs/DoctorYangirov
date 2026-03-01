@@ -1219,6 +1219,24 @@ section:last-child {
     background-color: var(--primary-dark);
 }
 
+/* Согласие на обработку данных */
+.privacy-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+    text-align: center;
+}
+
+.privacy-note a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.privacy-note a:hover {
+    text-decoration: none;
+}
+
 /* ---------- Футер ---------- */
 .footer {
     background-color: var(--bg-white);
