@@ -152,7 +152,7 @@ window.addEventListener('resize', () => {
 
 // Отправка формы
 const form = document.querySelector('#contact-form');
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwUc-0tZ5ZmoqE5OWIlbWZUPgkTmDcOOMynQH0Do2IaT7_1Rk85R6hOu6qGJh344Cmd/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwds1q1nPUhkrH2fHl-6gqWZfo5QoxpIwp10k0mOzuux47Qmg_8DK2CddXlqJ_1_vob/exec';
 
 // Обработчик отправки
 form.addEventListener('submit', e => {
