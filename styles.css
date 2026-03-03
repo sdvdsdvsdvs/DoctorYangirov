@@ -41,7 +41,7 @@ body {
 .navbar {
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1001;
     background-color: var(--bg-white);
     box-shadow: var(--shadow-sm);
     padding: 12px 20px;
@@ -116,22 +116,6 @@ a {
     font-size: 1.1rem;
 }
 
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-    }
-    .nav-links {
-        justify-content: center;
-        margin: 5px 0;
-    }
-    .nav-contacts {
-        justify-content: center;
-    }
-}
-
-
 /* ---------- Бургер-меню (скрыт на десктопе) ---------- */
 .burger-menu {
     display: none;
@@ -139,13 +123,44 @@ a {
     cursor: pointer;
     color: var(--primary);
     transition: color 0.2s;
-    margin-left: auto;
-    padding: 0 10px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    flex-shrink: 0;
+    z-index: 1002;
 }
 .burger-menu:hover {
     color: var(--primary-dark);
 }
+.burger-menu i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s ease;
+}
 
+.burger-icon,
+.close-icon {
+    font-size: 2rem;
+}
+
+.close-icon {
+    opacity: 0;
+    pointer-events: none;
+}
+/* Когда меню активно, показываем крестик и скрываем бургер */
+.fullscreen-menu.active ~ .navbar .burger-icon,
+body.menu-open .burger-icon {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fullscreen-menu.active ~ .navbar .close-icon,
+body.menu-open .close-icon {
+    opacity: 1;
+    pointer-events: auto;
+}
 /* Полноэкранное меню */
 .fullscreen-menu {
     position: fixed;
@@ -215,23 +230,45 @@ body.menu-open {
 
 /* Адаптация */
 @media (max-width: 1159px) {
-    .nav-links {
-        display: none;
+    .navbar {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: 56px;
+        min-height: unset;
     }
+
+    .nav-logo {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
+        font-size: 1.3rem;
+        line-height: 56px;
+        padding: 0;
+    }
+
     .burger-menu {
+        flex-shrink: 0;
         display: block;
+        width: 40px;
+        height: 40px;
+        position: relative;
+        margin: 8px 0;
     }
+
+    .nav-links,
     .nav-contacts {
-        display: none; /* скрываем контакты в шапке, они будут в полном меню */
+        display: none;
     }
 }
 
 @media (min-width: 1160px) {
     .fullscreen-menu {
-        display: none; /* на десктопе не показываем */
+        display: none;
     }
 }
-
 
 /* ---------- HERO ---------- */
 .hero {
@@ -365,6 +402,7 @@ body.menu-open {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s;
+    margin-top: 15px;
 }
 
 .btn-outline:hover {
@@ -467,7 +505,7 @@ section:last-child {
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     line-height: 1.4;
 }
 
@@ -521,6 +559,133 @@ section:last-child {
     color: var(--primary);
     width: 20px;
 }
+
+/* ---------- Секция видео ---------- */
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+/* Ссылка, оборачивающая всю карточку */
+.video-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;  /* чтобы ссылка занимала всё пространство */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.video-card-link:hover {
+    transform: translateY(-4px);
+}
+
+.video-card-link:hover .video-card {
+    box-shadow: 0 15px 30px rgba(37,99,235,0.1);
+    border-color: var(--border-hover);
+}
+
+/* Сама карточка (внутри ссылки) */
+.video-card {
+    background: var(--bg-white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border: 1px solid #f1f5f9;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Кнопка-оверлей (не ссылка, просто элемент) */
+.video-play-link {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(29, 78, 216, 0.9);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1rem;
+    white-space: nowrap;
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    pointer-events: none; /* чтобы клик проходил сквозь кнопку к ссылке */
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.video-card-link:hover .video-play-link {
+    background-color: var(--primary);
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.video-play-link i {
+    font-size: 1.2rem;
+}
+
+.video-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 15px 15px 5px;
+    color: var(--text-dark);
+    line-height: 1.4;
+}
+
+.video-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 15px 20px;
+    flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+    .videos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .video-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .video-card p {
+        font-size: 0.85rem;
+    }
+    
+    .video-play-link {
+        padding: 12px 24px;      /* было 8px 16px */
+        font-size: 1.1rem;        /* было 0.9rem */
+        gap: 8px;                 /* было 6px */
+    }
+    
+    .video-play-link i {
+        font-size: 1.2rem;        /* было 1rem */
+    }
+}
+
 
 /* ---------- Галерея дипломов ---------- */
 .diplomas-grid {
@@ -718,7 +883,7 @@ section:last-child {
 
 .review-text {
     color: var(--text-light);
-    font-style: italic;
+    /* font-style: italic; */
     margin-bottom: 15px;
 }
 
@@ -735,6 +900,10 @@ section:last-child {
 .reviews-footer {
     text-align: right;
     margin-top: 15px;
+}
+
+.reviews-footer > * + * {
+    margin-left: 10px;
 }
 
 /* ---------- Статья о подготовке ---------- */
@@ -775,10 +944,11 @@ section:last-child {
 .custom-bullet-list {
     list-style: none;
     padding-left: 0;
+    
 }
 .custom-bullet-list li {
     position: relative;
-    padding-left: 1.5rem;
+    padding-left: 1.2rem;
     margin-bottom: 0.5rem;
 }
 .custom-bullet-list li::before {
@@ -789,7 +959,7 @@ section:last-child {
     position: absolute;
     left: 0;
     font-size: 0.6rem;
-    top: 0.2rem;
+    top: 0.35rem;
 }
 
 /* Список с уже встроенными иконками (например, доп. рекомендации) — оставляем как есть */
@@ -1008,6 +1178,102 @@ section:last-child {
     }
 }
 
+/* Блок ссылки на инструкцию Эзиклен */
+.eziclen-link-block {
+    margin: 30px 0 20px;
+    padding: 20px 25px;
+    background-color: #f0f9ff;
+    border-left: 4px solid var(--primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.eziclen-link-block p {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--text-dark);
+    flex: 1;
+}
+
+.eziclen-link-block p strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.eziclen-link-block .btn {
+    margin-top: 0;
+    white-space: nowrap;
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.eziclen-link-block .btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.eziclen-link-block .btn i {
+    font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+    .eziclen-link-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .eziclen-link-block .btn {
+        align-self: flex-start;
+    }
+}
+
+/* Стиль для списка с синими точками и цветными выделениями */
+.prep-list-blue-dots {
+    list-style: none;
+    padding-left: 0;
+    
+}
+
+.prep-list-blue-dots li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.prep-list-blue-dots li i {
+    color: var(--primary);
+    font-size: 0.6rem;
+    margin-top: 6px;
+    flex-shrink: 0;
+}
+
+.prep-list-blue-dots li strong {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* Дополнение для списка с сильными выделениями */
+.custom-bullet-list li strong {
+    color: var(--primary);
+    font-weight: 700;
+}
+
 /* ---------- Блок "Совет доктора" ---------- */
 .doctor-advice-with-photo {
     display: flex;
@@ -1117,6 +1383,7 @@ section:last-child {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-left: 0.2rem;
 }
 
 .contact-title {
@@ -1284,3 +1551,193 @@ section:last-child {
         grid-template-columns: 1fr;
     }
 }
+
+/* ---------- Мобильные оптимизации (исправление отступов) ---------- */
+@media (max-width: 768px) {
+    /* Убираем лишние отступы у списков */
+    .article-content ul,
+    .article-content ol {
+        margin-left: 0;
+        padding-left: 0;
+    }
+    
+    /* Для кастомных списков */
+    .custom-bullet-list {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+    
+    .custom-bullet-list li {
+        padding-left: 1.2rem;
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+    
+    .custom-bullet-list li::before {
+        left: 0;
+    }
+    
+    /* Для обычных списков с иконками */
+    .prep-list-icons,
+    .doc-list,
+    .service-card ul {
+        margin-left: 0;
+        padding-left: 0;
+    }
+    
+    .prep-list-icons li,
+    .doc-list li,
+    .service-card li {
+        font-size: 1rem;
+    }
+    
+    /* Уменьшаем внутренние отступы в блоках */
+    .article-content {
+        padding: 15px;
+    }
+    
+    .interactive-prep {
+        padding: 15px;
+    }
+    
+    .schedule-card {
+        padding: 15px;
+    }
+    
+    /* Убираем лишний margin у контейнера */
+    .container {
+        padding: 0 12px;
+    }
+    
+    /* Блоки разрешённых/запрещённых продуктов */
+    .diet-blocks {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .diet-allowed,
+    .diet-forbidden {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .diet-allowed ul,
+    .diet-forbidden ul {
+        margin-left: 0;
+    }
+    
+    .diet-allowed li,
+    .diet-forbidden li {
+        gap: 6px;
+        font-size: 1rem;
+    }
+    
+    /* Блок ссылки на Эзиклен */
+    .eziclen-link-block {
+        padding: 15px;
+        margin: 20px 0;
+    }
+    
+    .eziclen-link-block p {
+        font-size: 1rem;
+    }
+    
+    /* Расписание */
+    .step-desc {
+        font-size: 1rem;
+    }
+    
+    .step-time {
+        font-size: 1rem;
+    }
+    
+    /* Текст в блоке совета доктора */
+    .advice-text {
+        font-size: 1rem;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .article-content {
+        padding: 12px;
+    }
+    
+    .interactive-prep {
+        padding: 12px;
+    }
+    
+    .schedule-card {
+        padding: 12px;
+    }
+    
+    .custom-bullet-list li {
+        padding-left: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .diet-allowed li,
+    .diet-forbidden li,
+    .prep-list-icons li,
+    .doc-list li,
+    .service-card li {
+        font-size: 0.95rem;
+    }
+    
+    .step-desc {
+        font-size: 0.95rem;
+    }
+}
+
+/* Глобальное правило для основного текста в статье */
+.article-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Выравниваем размер текста в списках с обычным текстом */
+.article-content p,
+.article-content li,
+.custom-bullet-list li,
+.prep-list-icons li,
+.doc-list li,
+.service-card li,
+.diet-allowed li,
+.diet-forbidden li {
+    font-size: 16px;
+    font-size: 1rem;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .article-content p,
+    .article-content li,
+    .custom-bullet-list li,
+    .prep-list-icons li,
+    .doc-list li,
+    .service-card li,
+    .diet-allowed li,
+    .diet-forbidden li {
+        font-size: 16px;
+    }
+}
+
+/* Если на очень маленьких экранах нужно чуть уменьшить */
+@media (max-width: 480px) {
+    .article-content p,
+    .article-content li,
+    .custom-bullet-list li,
+    .prep-list-icons li,
+    .doc-list li,
+    .service-card li,
+    .diet-allowed li,
+    .diet-forbidden li {
+        font-size: 15px;
+    }
+}
+

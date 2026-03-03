@@ -150,13 +150,36 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Функция отправки формы через mailto
-function sendByMail(form) {
-    const name = form.name.value;
-    const email = form.email.value;
-    const message = form.message.value;
-    const subject = 'Запись на приём';
-    const body = `Имя: ${name}%0AEmail: ${email}%0AСообщение: ${message}`;
-    window.location.href = `mailto:yangirov@list.ru?subject=${encodeURIComponent(subject)}&body=${body}`;
-    return false; // предотвращаем обычную отправку формы
-}
+// Отправка формы
+const form = document.querySelector('#contact-form');
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwUc-0tZ5ZmoqE5OWIlbWZUPgkTmDcOOMynQH0Do2IaT7_1Rk85R6hOu6qGJh344Cmd/exec';
+
+// Обработчик отправки
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const phone = form.querySelector('input[name="phone"]').value.trim();
+  const email = form.querySelector('input[name="email"]').value.trim();
+
+  if (!phone && !email) {
+    alert('Пожалуйста, укажите телефон или email для связи.');
+    return;
+  }
+
+  const submitButton = form.querySelector('button');
+  submitButton.disabled = true;
+  submitButton.innerText = 'Отправка...';
+
+  fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+    .then(response => {
+       alert("Спасибо! Ваша заявка принята.");
+       form.reset();
+       submitButton.disabled = false;
+       submitButton.innerText = 'Отправить';
+    })
+    .catch(error => {
+       console.error('Ошибка!', error.message);
+       alert("Произошла ошибка. Попробуйте еще раз.");
+       submitButton.disabled = false;
+    });
+});
