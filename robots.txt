@@ -1,5 +1,5 @@
 
-
 User-agent: *
 Disallow: /
-Sitemap: https://doctoryangirov.ru
+
+Sitemap: https://doctoryangirov.ru/sitemap.xml

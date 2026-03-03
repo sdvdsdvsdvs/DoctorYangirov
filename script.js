@@ -5,7 +5,6 @@ const previewImages = document.querySelectorAll('.diploma-image img');
 
 const originalImages = [];
 previewImages.forEach(img => {
-    // предполагаем, что имена миниатюр содержат "-thumb"
     originalImages.push(img.src.replace('-thumb', ''));
 });
 
@@ -77,13 +76,12 @@ timeSelect.addEventListener('change', function() {
     if (!data) return;
 
     const procedureHour = parseInt(selected.split(':')[0]);
-    const isTwoPhase = procedureHour <= 13; // двухэтапная для времени до 13:00 включительно
+    const isTwoPhase = procedureHour <= 13;
     const steps = data.steps;
 
     let html = `<div class="schedule-badge">${isTwoPhase ? 'Двухэтапная схема' : 'Одноэтапная схема'}</div>`;
     html += `<div class="schedule-title"><i class="fas fa-clock"></i> Ваше расписание на ${selected}</div>`;
 
-    // Первый этап
     if (isTwoPhase) {
         html += `<div class="schedule-stage-title"><i class="fas fa-calendar-day"></i> Прием первой дозы – день накануне колоноскопии</div>`;
     } else {
@@ -150,36 +148,95 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Отправка формы
+// ========== МОДАЛЬНОЕ ОКНО (с иконками FontAwesome) ==========
+const modalOverlay = document.getElementById('modal-overlay');
+const modalWindow = document.getElementById('modal-window');
+const modalIcon = document.getElementById('modal-icon');
+const modalMessage = document.getElementById('modal-message');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalActionBtn = document.getElementById('modal-action-btn');
+
+function showModal(type, message) {
+    if (type === 'success') {
+        modalIcon.innerHTML = '<i class="fas fa-circle-check" style="color: #1d4ed8; font-size: 4rem;"></i>';
+    } else {
+        modalIcon.innerHTML = '<i class="fas fa-circle-exclamation" style="color: #ef4444; font-size: 4rem;"></i>';
+    }
+
+    modalWindow.classList.remove('success', 'error');
+    modalWindow.classList.add(type);
+
+    modalMessage.textContent = message;
+
+    modalOverlay.classList.add('show');
+}
+
+function hideModal() {
+    modalOverlay.classList.remove('show');
+}
+
+modalCloseBtn.addEventListener('click', hideModal);
+modalActionBtn.addEventListener('click', hideModal);
+
+modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+        hideModal();
+    }
+});
+
+// ========== ВАЛИДАЦИЯ ПОЛЕЙ ФОРМЫ ==========
 const form = document.querySelector('#contact-form');
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwds1q1nPUhkrH2fHl-6gqWZfo5QoxpIwp10k0mOzuux47Qmg_8DK2CddXlqJ_1_vob/exec';
+const phoneInput = form.querySelector('input[name="phone"]');
+const emailInput = form.querySelector('input[name="email"]');
+const errorContainer = document.getElementById('contact-error');
 
-// Обработчик отправки
+phoneInput.addEventListener('input', clearValidationError);
+emailInput.addEventListener('input', clearValidationError);
+
+function clearValidationError() {
+    phoneInput.classList.remove('input-error');
+    emailInput.classList.remove('input-error');
+    errorContainer.classList.remove('show');
+}
+
+function showValidationError(message) {
+    phoneInput.classList.add('input-error');
+    emailInput.classList.add('input-error');
+    errorContainer.textContent = message;
+    errorContainer.classList.add('show');
+}
+
+// ========== ОТПРАВКА ФОРМЫ ==========
+const scriptURL = 'https://script.google.com/macros/s/AKfycby2gWiLwazShucXK_yxyCwj2PVm_JL3PDso0v7ObjwPfG2dg6cIkdF2-N-PkZ6aFbeE/exec';
+
 form.addEventListener('submit', e => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const phone = form.querySelector('input[name="phone"]').value.trim();
-  const email = form.querySelector('input[name="email"]').value.trim();
+    clearValidationError();
 
-  if (!phone && !email) {
-    alert('Пожалуйста, укажите телефон или email для связи.');
-    return;
-  }
+    const phone = phoneInput.value.trim();
+    const email = emailInput.value.trim();
 
-  const submitButton = form.querySelector('button');
-  submitButton.disabled = true;
-  submitButton.innerText = 'Отправка...';
+    if (!phone && !email) {
+        showValidationError('Укажите телефон или email для связи.');
+        return;
+    }
 
-  fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-    .then(response => {
-       alert("Спасибо! Ваша заявка принята.");
-       form.reset();
-       submitButton.disabled = false;
-       submitButton.innerText = 'Отправить';
-    })
-    .catch(error => {
-       console.error('Ошибка!', error.message);
-       alert("Произошла ошибка. Попробуйте еще раз.");
-       submitButton.disabled = false;
-    });
+    const submitButton = form.querySelector('button');
+    submitButton.disabled = true;
+    submitButton.innerText = 'Отправка...';
+
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+            showModal('success', 'Спасибо! Доктор скоро свяжется с вами.');
+            form.reset();
+            submitButton.disabled = false;
+            submitButton.innerText = 'Отправить';
+        })
+        .catch(error => {
+            console.error('Ошибка!', error.message);
+            showModal('error', 'Ошибка! Заявка не отправилась. Вы можете связаться с доктором по телефону, email или в мессенджерах.');
+            submitButton.disabled = false;
+            submitButton.innerText = 'Отправить';
+        });
 });
