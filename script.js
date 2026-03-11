@@ -80,14 +80,14 @@ timeSelect.addEventListener('change', function() {
     const steps = data.steps;
 
     let html = `<div class="schedule-badge">${isTwoPhase ? 'Двухэтапная схема' : 'Одноэтапная схема'}</div>`;
-    html += `<div class="schedule-title"><i class="fas fa-clock"></i> Ваше расписание на ${selected}</div>`;
+    html += `<div class="schedule-title"><i class="fas fa-clock"></i> Ваше расписание, если прием назначен на ${selected}</div>`;
 
     if (isTwoPhase) {
         html += `<div class="schedule-stage-title"><i class="fas fa-calendar-day"></i> Прием первой дозы – день накануне колоноскопии</div>`;
     } else {
         html += `<div class="schedule-stage-title"><i class="fas fa-sun"></i> Прием первой дозы – утром в день колоноскопии</div>`;
     }
-    html += `<div class="schedule-step"><div class="step-time">${steps[0]}</div><div class="step-desc"><strong>0,5 л раствора Эзиклен® (флакон 176 мл + вода до 500 мл)</strong> — выпить медленно, в течение 30–60 минут</div></div>`;
+    html += `<div class="schedule-step"><div class="step-time">${steps[0]}</div><div class="step-desc"><strong>0,5 л раствора Эзиклен® (флакон 176 мл + вода 324 мл)</strong> — выпить медленно, в течение 30–60 минут</div></div>`;
     html += `<div class="schedule-step"><div class="step-time">${steps[1]}</div><div class="step-desc"><strong>1 л прозрачной жидкости</strong> (вода, чай, бульон)</div></div>`;
 
     if (isTwoPhase) {
@@ -97,8 +97,14 @@ timeSelect.addEventListener('change', function() {
         html += `<div class="schedule-stage-title"><i class="fas fa-clock"></i> Прием второй дозы – в день колоноскопии</div>`;
     }
 
-    html += `<div class="schedule-step"><div class="step-time">${steps[2]}</div><div class="step-desc"><strong>0,5 л раствора Эзиклен® (флакон 176 мл + вода до 500 мл)</strong> — выпить медленно, в течение 30–60 минут</div></div>`;
+    
+
+    html += `<div class="schedule-step"><div class="step-time">${steps[2]}</div><div class="step-desc"><strong>0,5 л раствора Эзиклен® (флакон 176 мл + вода 324 мл)</strong> — выпить медленно, в течение 30–60 минут</div></div>`;
     html += `<div class="schedule-step"><div class="step-time">${steps[3]}</div><div class="step-desc"><strong>1 л прозрачной жидкости</strong> (вода, чай, бульон)</div></div>`;
+
+html += `<div class="schedule-night"></i> Ничего не пить и не есть 2 часа</div>`;
+    html += `<div class="schedule-stage-title"><i class="fas fa-stethoscope"></i> Колоноскопия в ${selected}</div>`;
+
 
     outputDiv.innerHTML = html;
     outputDiv.style.display = 'block';
