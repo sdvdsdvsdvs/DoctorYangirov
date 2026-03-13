@@ -242,7 +242,7 @@ privacyCheck.addEventListener('change', function() {
 });
 
 // ========== ОТПРАВКА ФОРМЫ ==========
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxGGfq-9u6f-OjHPP-z2bVfF-YWbvb5VQdLRfn9dC2LDy_mSvQMx5lxR2CJqPUJgEcD/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyGqfK4w7j3d5C6LtYPZ4g097gv-BvOWmE0cqC2AGDBSt4SHXSBeBizRO2KYJgcBg/exec';
 
 form.addEventListener('submit', e => {
     e.preventDefault();
