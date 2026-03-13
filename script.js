@@ -242,36 +242,54 @@ privacyCheck.addEventListener('change', function() {
 });
 
 // ========== ОТПРАВКА ФОРМЫ ==========
-const scriptURL = 'https://script.google.com/macros/s/AKfycby2gWiLwazShucXK_yxyCwj2PVm_JL3PDso0v7ObjwPfG2dg6cIkdF2-N-PkZ6aFbeE/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxGGfq-9u6f-OjHPP-z2bVfF-YWbvb5VQdLRfn9dC2LDy_mSvQMx5lxR2CJqPUJgEcD/exec';
 
 form.addEventListener('submit', e => {
     e.preventDefault();
 
+    // 1. Проверка согласия
     if (!privacyCheck.checked) {
         showValidationError('Необходимо дать согласие на обработку персональных данных.');
         return;
     }
 
-    clearValidationError();
-
+    // 2. Проверка заполненности телефона или email
     const phone = phoneInput.value.trim();
     const email = emailInput.value.trim();
-
     if (!phone && !email) {
         showValidationError('Укажите телефон или email для связи.');
         return;
     }
 
+    // 3. Проверка, что API капчи загружен
+    if (typeof grecaptcha === 'undefined' || typeof grecaptcha.getResponse !== 'function') {
+        showValidationError('Сервис проверки ещё не загрузился, попробуйте через пару секунд.');
+        return;
+    }
+
+    // 4. Проверка, что пользователь прошёл капчу
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+        showValidationError('Пожалуйста, подтвердите, что вы не робот.');
+        return;
+    }
+
+    // 5. Собираем данные формы вместе с токеном капчи
+    const formData = new FormData(form);
+    formData.append('g-recaptcha-response', recaptchaResponse);
+
+    // 6. Отправка
     submitBtn.disabled = true;
     submitBtn.innerText = 'Отправка...';
 
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+    fetch(scriptURL, { method: 'POST', body: formData })
         .then(response => {
             showModal('success', 'Спасибо! Доктор скоро свяжется с вами.');
             form.reset();
             privacyCheck.checked = false;
             submitBtn.disabled = true;
             submitBtn.innerText = 'Отправить';
+            grecaptcha.reset(); // сбрасываем капчу для следующей отправки
         })
         .catch(error => {
             console.error('Ошибка!', error.message);
@@ -349,4 +367,3 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
         }
     });
 });
-
