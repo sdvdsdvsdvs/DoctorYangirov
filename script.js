@@ -13,7 +13,8 @@ let currentIndex = 0;
 function openModal(index) {
     currentIndex = index;
     modalImg.src = originalImages[currentIndex];
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
+    document.querySelector('.modal-close-fixed').focus();
 }
 
 function closeModal(event) {
@@ -45,6 +46,12 @@ window.onclick = (event) => {
         closeModal();
     }
 };
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+        closeModal();
+    }
+});
 
 // Интерактивный выбор времени для Эзиклена
 const scheduleData = {
@@ -80,31 +87,28 @@ timeSelect.addEventListener('change', function() {
     const steps = data.steps;
 
     let html = `<div class="schedule-badge">${isTwoPhase ? 'Двухэтапная схема' : 'Одноэтапная схема'}</div>`;
-    html += `<div class="schedule-title"><i class="fas fa-clock"></i> Ваше расписание, если прием назначен на ${selected}</div>`;
+    html += `<div class="schedule-title"><span class="schedule-text">Ваше расписание, если&nbsp;прием назначен на&nbsp;<span class="time-highlight">${selected}</span></span></div>`;
 
     if (isTwoPhase) {
-        html += `<div class="schedule-stage-title"><i class="fas fa-calendar-day"></i> Прием первой дозы – день накануне колоноскопии</div>`;
+        html += `<div class="schedule-stage-title"><i class="fas fa-cloud-moon" aria-hidden="true"></i> Прием первой дозы – день накануне колоноскопии</div>`;
     } else {
-        html += `<div class="schedule-stage-title"><i class="fas fa-sun"></i> Прием первой дозы – утром в день колоноскопии</div>`;
+        html += `<div class="schedule-stage-title"><i class="fas fa-sun" aria-hidden="true"></i> Прием первой дозы – утром в день колоноскопии</div>`;
     }
-    html += `<div class="schedule-step"><div class="step-time">${steps[0]}</div><div class="step-desc"><strong>0,5 л раствора Эзиклен® (флакон 176 мл + вода 324 мл)</strong> — выпить медленно, в течение 30–60 минут</div></div>`;
-    html += `<div class="schedule-step"><div class="step-time">${steps[1]}</div><div class="step-desc"><strong>1 л прозрачной жидкости</strong> (вода, чай, бульон)</div></div>`;
+    html += `<div class="schedule-step"><div class="step-time">${steps[0]}</div><div class="step-desc">0,5 л раствора Эзиклен® (флакон 176 мл + вода 324 мл) — выпить медленно, в течение 30–60 минут</div></div>`;
+    html += `<div class="schedule-step"><div class="step-time">${steps[1]}</div><div class="step-desc">1 л прозрачной жидкости (вода, чай, бульон)</div></div>`;
 
     if (isTwoPhase) {
-        html += `<div class="schedule-night"><i class="fas fa-moon"></i> Ночь</div>`;
-        html += `<div class="schedule-stage-title"><i class="fas fa-cloud-sun"></i> Прием второй дозы – утром в день колоноскопии</div>`;
+        html += `<div class="schedule-night"><i class="fas fa-moon" aria-hidden="true"></i> Ночь</div>`;
+        html += `<div class="schedule-stage-title"><i class="fas fa-sun" aria-hidden="true"></i> Прием второй дозы – утром в день колоноскопии</div>`;
     } else {
-        html += `<div class="schedule-stage-title"><i class="fas fa-clock"></i> Прием второй дозы – в день колоноскопии</div>`;
+        html += `<div class="schedule-stage-title"><i class="fas fa-cloud-sun" aria-hidden="true"></i> Прием второй дозы – в день колоноскопии</div>`;
     }
 
-    
+    html += `<div class="schedule-step"><div class="step-time">${steps[2]}</div><div class="step-desc">0,5 л раствора Эзиклен® (флакон 176 мл + вода 324 мл) — выпить медленно, в течение 30–60 минут</div></div>`;
+    html += `<div class="schedule-step"><div class="step-time">${steps[3]}</div><div class="step-desc">1 л прозрачной жидкости (вода, чай, бульон)</div></div>`;
 
-    html += `<div class="schedule-step"><div class="step-time">${steps[2]}</div><div class="step-desc"><strong>0,5 л раствора Эзиклен® (флакон 176 мл + вода 324 мл)</strong> — выпить медленно, в течение 30–60 минут</div></div>`;
-    html += `<div class="schedule-step"><div class="step-time">${steps[3]}</div><div class="step-desc"><strong>1 л прозрачной жидкости</strong> (вода, чай, бульон)</div></div>`;
-
-html += `<div class="schedule-night"></i> Ничего не пить и не есть 2 часа</div>`;
-    html += `<div class="schedule-stage-title"><i class="fas fa-stethoscope"></i> Колоноскопия в ${selected}</div>`;
-
+    html += `<div class="schedule-night">Ничего не&nbsp;пить и&nbsp;не&nbsp;есть 2&nbsp;часа</div>`;
+    html += `<div class="schedule-stage-title"><i class="fas fa-stethoscope" aria-hidden="true"></i> Колоноскопия в ${selected}</div>`;
 
     outputDiv.innerHTML = html;
     outputDiv.style.display = 'block';
@@ -119,8 +123,10 @@ const body = document.body;
 const menuLinks = document.querySelectorAll('.fullscreen-link');
 
 function toggleMenu() {
+    const isActive = fullscreenMenu.classList.contains('active');
     fullscreenMenu.classList.toggle('active');
     body.classList.toggle('menu-open');
+    burger.setAttribute('aria-expanded', !isActive);
 
     if (fullscreenMenu.classList.contains('active')) {
         burgerIcon.style.display = 'none';
@@ -136,9 +142,18 @@ burger.addEventListener('click', (e) => {
     toggleMenu();
 });
 
+burger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMenu();
+    }
+});
+
 menuLinks.forEach(link => {
     link.addEventListener('click', () => {
-        toggleMenu();
+        if (fullscreenMenu.classList.contains('active')) {
+            toggleMenu();
+        }
     });
 });
 
@@ -154,7 +169,7 @@ window.addEventListener('resize', () => {
     }
 });
 
-// ========== МОДАЛЬНОЕ ОКНО (с иконками FontAwesome) ==========
+// ========== МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЙ ==========
 const modalOverlay = document.getElementById('modal-overlay');
 const modalWindow = document.getElementById('modal-window');
 const modalIcon = document.getElementById('modal-icon');
@@ -164,9 +179,9 @@ const modalActionBtn = document.getElementById('modal-action-btn');
 
 function showModal(type, message) {
     if (type === 'success') {
-        modalIcon.innerHTML = '<i class="fas fa-circle-check" style="color: #1d4ed8; font-size: 4rem;"></i>';
+        modalIcon.innerHTML = '<i class="fas fa-circle-check" style="color: #1d4ed8; font-size: 4rem;" aria-hidden="true"></i>';
     } else {
-        modalIcon.innerHTML = '<i class="fas fa-circle-exclamation" style="color: #ef4444; font-size: 4rem;"></i>';
+        modalIcon.innerHTML = '<i class="fas fa-circle-exclamation" style="color: #ef4444; font-size: 4rem;" aria-hidden="true"></i>';
     }
 
     modalWindow.classList.remove('success', 'error');
@@ -175,6 +190,7 @@ function showModal(type, message) {
     modalMessage.textContent = message;
 
     modalOverlay.classList.add('show');
+    modalCloseBtn.focus();
 }
 
 function hideModal() {
@@ -190,11 +206,19 @@ modalOverlay.addEventListener('click', (e) => {
     }
 });
 
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('show')) {
+        hideModal();
+    }
+});
+
 // ========== ВАЛИДАЦИЯ ПОЛЕЙ ФОРМЫ ==========
 const form = document.querySelector('#contact-form');
 const phoneInput = form.querySelector('input[name="phone"]');
 const emailInput = form.querySelector('input[name="email"]');
 const errorContainer = document.getElementById('contact-error');
+const privacyCheck = document.getElementById('privacy-check');
+const submitBtn = document.getElementById('submit-btn');
 
 phoneInput.addEventListener('input', clearValidationError);
 emailInput.addEventListener('input', clearValidationError);
@@ -212,11 +236,21 @@ function showValidationError(message) {
     errorContainer.classList.add('show');
 }
 
+// Активация кнопки отправки только при согласии
+privacyCheck.addEventListener('change', function() {
+    submitBtn.disabled = !this.checked;
+});
+
 // ========== ОТПРАВКА ФОРМЫ ==========
 const scriptURL = 'https://script.google.com/macros/s/AKfycby2gWiLwazShucXK_yxyCwj2PVm_JL3PDso0v7ObjwPfG2dg6cIkdF2-N-PkZ6aFbeE/exec';
 
 form.addEventListener('submit', e => {
     e.preventDefault();
+
+    if (!privacyCheck.checked) {
+        showValidationError('Необходимо дать согласие на обработку персональных данных.');
+        return;
+    }
 
     clearValidationError();
 
@@ -228,21 +262,91 @@ form.addEventListener('submit', e => {
         return;
     }
 
-    const submitButton = form.querySelector('button');
-    submitButton.disabled = true;
-    submitButton.innerText = 'Отправка...';
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Отправка...';
 
     fetch(scriptURL, { method: 'POST', body: new FormData(form) })
         .then(response => {
             showModal('success', 'Спасибо! Доктор скоро свяжется с вами.');
             form.reset();
-            submitButton.disabled = false;
-            submitButton.innerText = 'Отправить';
+            privacyCheck.checked = false;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Отправить';
         })
         .catch(error => {
             console.error('Ошибка!', error.message);
             showModal('error', 'Ошибка! Заявка не отправилась. Вы можете связаться с доктором по телефону, email или в мессенджерах.');
-            submitButton.disabled = false;
-            submitButton.innerText = 'Отправить';
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Отправить';
         });
 });
+
+// ========== ВСПЛЫВАЮЩИЕ УВЕДОМЛЕНИЯ (TOAST) ==========
+function showToast(message, duration = 3000) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+        }, 300);
+    }, duration);
+}
+
+// ========== КОПИРОВАНИЕ ТЕКСТА ==========
+document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const textToCopy = btn.dataset.copy;
+        if (!textToCopy) return;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    showToast(`Скопировано: ${textToCopy}`);
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования:', err);
+                    showToast('Не удалось скопировать', 2000);
+                });
+        } else {
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast(`Скопировано: ${textToCopy}`);
+            } catch (err) {
+                console.error('Ошибка копирования (fallback):', err);
+                showToast('Не удалось скопировать', 2000);
+            }
+            document.body.removeChild(textarea);
+        }
+    });
+
+    btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            btn.click();
+        }
+    });
+});
+
