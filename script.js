@@ -241,10 +241,8 @@ privacyCheck.addEventListener('change', function() {
     submitBtn.disabled = !this.checked;
 });
 
-// ========== ОТПРАВКА ФОРМЫ ==========
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyGqfK4w7j3d5C6LtYPZ4g097gv-BvOWmE0cqC2AGDBSt4SHXSBeBizRO2KYJgcBg/exec';
-const recaptchaResponseInput = document.getElementById('recaptchaResponse');
-const siteKey = '6LdhaYksAAAAAPoVjgpI4CSmXe7if2MuzVaRcWRI'; // ваш site key v3
+// ========== ОТПРАВКА ФОРМЫ (reCAPTCHA v2) ==========
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyM2Dw7eRDvmhwP7q-GsENuekbM96WKx_fRj0sbSZT3J0SNaecQ_6trEv9XDbJcNfWV/exec';
 
 form.addEventListener('submit', e => {
     e.preventDefault();
@@ -264,46 +262,42 @@ form.addEventListener('submit', e => {
     }
 
     // 3. Проверка, что API капчи загружен
-    if (typeof grecaptcha === 'undefined' || typeof grecaptcha.execute !== 'function') {
+    if (typeof grecaptcha === 'undefined') {
         showValidationError('Сервис проверки ещё не загрузился, попробуйте через пару секунд.');
         return;
     }
 
-    // 4. Блокируем кнопку, пока получаем токен
+    // 4. Получаем ответ от виджета
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+        showValidationError('Пожалуйста, подтвердите, что вы не робот.');
+        return;
+    }
+
+    // 5. Блокируем кнопку
     submitBtn.disabled = true;
-    submitBtn.innerText = 'Проверка...';
+    submitBtn.innerText = 'Отправка...';
 
-    // 5. Выполняем reCAPTCHA v3
-    grecaptcha.execute(siteKey, { action: 'submit' }).then(token => {
-        // Записываем токен в скрытое поле
-        recaptchaResponseInput.value = token;
+    // 6. Собираем данные формы
+    const formData = new FormData(form);
+    formData.append('g-recaptcha-response', recaptchaResponse); // добавляем токен капчи
 
-        // 6. Собираем данные формы и отправляем
-        const formData = new FormData(form);
-
-        submitBtn.innerText = 'Отправка...';
-
-        fetch(scriptURL, { method: 'POST', body: formData })
-            .then(response => {
-                showModal('success', 'Спасибо! Доктор скоро свяжется с вами.');
-                form.reset();
-                privacyCheck.checked = false;
-                submitBtn.disabled = true;
-                submitBtn.innerText = 'Отправить';
-                // v3 не нужно сбрасывать, токен одноразовый
-            })
-            .catch(error => {
-                console.error('Ошибка!', error.message);
-                showModal('error', 'Ошибка! Заявка не отправилась. Вы можете связаться с доктором по телефону, email или в мессенджерах.');
-                submitBtn.disabled = false;
-                submitBtn.innerText = 'Отправить';
-            });
-    }).catch(error => {
-        console.error('Ошибка получения токена reCAPTCHA:', error);
-        showValidationError('Не удалось выполнить проверку безопасности. Попробуйте ещё раз.');
-        submitBtn.disabled = false;
-        submitBtn.innerText = 'Отправить';
-    });
+    // 7. Отправляем
+    fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => {
+            showModal('success', 'Спасибо! Доктор скоро свяжется с вами.');
+            form.reset();
+            privacyCheck.checked = false;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Отправить';
+            grecaptcha.reset(); // сбрасываем капчу для следующей отправки
+        })
+        .catch(error => {
+            console.error('Ошибка!', error.message);
+            showModal('error', 'Ошибка! Заявка не отправилась. Вы можете связаться с доктором по телефону, email или в мессенджерах.');
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Отправить';
+        });
 });
 
 // ========== ВСПЛЫВАЮЩИЕ УВЕДОМЛЕНИЯ (TOAST) ==========
